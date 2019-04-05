@@ -35,6 +35,7 @@ bot.on("ready", async () =>{
         },
         status: "idle"
     })
+    //set timer to decrease bancho soul
 });
 
 //read and react to message input
