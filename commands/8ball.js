@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, banchoState) => {
     if(!args[2]) return message.reply("Aho Ka?")
     let replies = ["Yes", "No", "Yowamushi", "Uzendayo", "Aho Ka?"]
 

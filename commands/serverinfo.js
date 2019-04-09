@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, banchoState) => {
     let sicon = message.guild.displayAvatarURL;
     let serverembed = new Discord.RichEmbed()
         .setDescription("Server Information")

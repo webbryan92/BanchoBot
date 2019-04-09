@@ -5,7 +5,7 @@ const fs = require("fs");
 const bot = new Discord.Client({disableEveryone: true});
 bot.commands = new Discord.Collection();
 
-let banchosoul = require("./banchosoul.json");
+let banchoState = require("./banchosoul.json");
 
 fs.readdir("./commands/", (err, files) => {
     //if folder doesnt exist
@@ -34,7 +34,8 @@ bot.on("ready", async () =>{
             type: 'smoking'
         },
         status: "idle"
-    })
+    })  
+
     //set timer to decrease bancho soul
 });
 
@@ -51,10 +52,31 @@ bot.on("message", async message => {
     //check for the command and run the proper command file
     let commandfile = bot.commands.get(cmd.slice(prefix.length));
     if(commandfile) {
-        commandfile.run(bot, message, args)
+        commandfile.run(bot, message, args, banchoState)
         //call the soulchange function
         //bot.commands.soulchange.run(bot, message, args)
     };
+});
+
+//on guild(server) join
+bot.on("guildCreate", guild => {
+    console.log("Joined a new guild: " + guild.name);
+    //rewrite with object creating a primary identifier based off key
+    if(!(banchoState.id.includes(guild.id))){
+        banchoState[guild.id] = {
+            "banchoSoul": 10
+        };
+        fs.writeFile("./banchosoul.json", JSON.stringify(banchoState, null, 1), (err) => {
+            if (err){
+                console.error(err);
+                return;
+            };
+            console.log("banchosoul.json has been updated(guildCreate)")
+        })
+    }   
+    else{
+        console.log("guild exists");
+    } 
 });
 
 bot.login(tokenfile.token);

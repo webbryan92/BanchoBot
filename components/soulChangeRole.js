@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const banchoSoul = require("../banchosoul.json")
 
-module.exports.run = async (bot, guild, mood) => {
+module.exports.run = async (bot, guild, mood, banchoState) => {
     bot.guilds.get(guild.id)
 
     //useless statement until I separate soul level by guild

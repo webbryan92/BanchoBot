@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const soulChange = require("../components/soulChange.js")
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, banchoState) => {
     
     var voiceChannel = message.member.voiceChannel;
 
@@ -20,8 +20,7 @@ module.exports.run = async (bot, message, args) => {
         });
     }).catch(err => console.log(err));
 
-    soulChange.run(bot, message, "increase");
-    console.log("past soul change")    
+    soulChange.run(bot, message.guild, "increase", banchoState);
 }
 
 module.exports.help = {
