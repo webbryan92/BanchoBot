@@ -5,6 +5,9 @@ const fs = require("fs");
 const bot = new Discord.Client({disableEveryone: true});
 bot.commands = new Discord.Collection();
 
+//components
+const createBanchoRole = require(`./components/createBanchoRole.js`);
+
 let banchoState = require("./banchosoul.json");
 
 fs.readdir("./commands/", (err, files) => {
@@ -43,6 +46,7 @@ bot.on("ready", async () =>{
 bot.on("message", async message => {
     if(message.author.bot) return;
     if(message.channel.type === "dm") return;
+    console.log("the guild id is" + message.guild.id);
 
     let prefix = botconfig.prefix;
     let messageArray = message.content.split(" ");
@@ -61,8 +65,8 @@ bot.on("message", async message => {
 //on guild(server) join
 bot.on("guildCreate", guild => {
     console.log("Joined a new guild: " + guild.name);
-    //rewrite with object creating a primary identifier based off key
-    if(!(banchoState.id.includes(guild.id))){
+    //create a state entry for the server using the guild.id as an identifier if none exists
+    if(!(banchoState.hasOwnProperty(guild.id))){
         banchoState[guild.id] = {
             "banchoSoul": 10
         };
@@ -76,7 +80,8 @@ bot.on("guildCreate", guild => {
     }   
     else{
         console.log("guild exists");
-    } 
+    }
+    //createBanchoRole.run(bot, guild);
 });
 
 bot.login(tokenfile.token);

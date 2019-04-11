@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args, banchoState) => {
         });
     }).catch(err => console.log(err));
 
-    soulChange.run(bot, message.guild, "increase", banchoState);
+    soulChange.run(bot, "increase", banchoState);
 }
 
 module.exports.help = {
