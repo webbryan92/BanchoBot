@@ -6,7 +6,8 @@ const bot = new Discord.Client({disableEveryone: true});
 bot.commands = new Discord.Collection();
 
 //components
-const createBanchoRole = require(`./components/createBanchoRole.js`);
+//const createBanchoRole = require(`./components/createBanchoRole.js`);
+const delayTimer = require(`./components/delayTimer.js`);
 
 let banchoState = require("./banchosoul.json");
 
@@ -40,6 +41,9 @@ bot.on("ready", async () =>{
     })  
 
     //set timer to decrease bancho soul
+    setInterval(() => {
+        delayTimer.run();
+    }, 1800000); // Runs this every 30 minutes.
 });
 
 //read and react to message input
