@@ -24,5 +24,6 @@ module.exports.run = async (bot, message, args, banchoState) => {
 }
 
 module.exports.help = {
-    name: "fridaynight"
+    name: "fridaynight",
+    description: "play Friday Night in voice or post the youtube video if the command user is not in voice."
 }

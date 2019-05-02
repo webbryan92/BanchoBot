@@ -50,7 +50,6 @@ bot.on("ready", async () =>{
 bot.on("message", async message => {
     if(message.author.bot) return;
     if(message.channel.type === "dm") return;
-    console.log("the guild id is" + message.guild.id);
 
     let prefix = botconfig.prefix;
     let messageArray = message.content.split(" ");
@@ -61,8 +60,6 @@ bot.on("message", async message => {
     let commandfile = bot.commands.get(cmd.slice(prefix.length));
     if(commandfile) {
         commandfile.run(bot, message, args, banchoState)
-        //call the soulchange function
-        //bot.commands.soulchange.run(bot, message, args)
     };
 });
 

@@ -7,7 +7,8 @@ module.exports.run = async (bot, message, args, banchoState) => {
         .setColor("#15f153")
         .setThumbnail(bicon)
         .addField("Bot Name", bot.user.username)
-        .addField("Created On", bot.user.createdAt);
+        .addField("Created On", bot.user.createdAt)
+        .addField("Additional Info:", "to see mood give the bot a role named \"Bancho\" with a lower rank than the BanchoBot role");
 
     return message.channel.send(botembed);
 }
