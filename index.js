@@ -52,14 +52,14 @@ bot.on("message", async message => {
     if(message.channel.type === "dm") return;
 
     let prefix = botconfig.prefix;
-    let messageArray = message.content.split(" ");
+    let messageArray = message.content.split(/ +/);
     let cmd = messageArray[0];
     let args = messageArray.slice(1);
 
     //check for the command and run the proper command file
     let commandfile = bot.commands.get(cmd.slice(prefix.length));
     if(commandfile) {
-        commandfile.run(bot, message, args, banchoState)
+        commandfile.run(bot, message, args, banchoState);
     };
 });
 
@@ -69,7 +69,8 @@ bot.on("guildCreate", guild => {
     //create a state entry for the server using the guild.id as an identifier if none exists
     if(!(banchoState.hasOwnProperty(guild.id))){
         banchoState[guild.id] = {
-            "banchoSoul": 10
+            "banchoSoul": 10,
+            "qstLead": ""
         };
         fs.writeFile("./banchosoul.json", JSON.stringify(banchoState, null, 1), (err) => {
             if (err){
