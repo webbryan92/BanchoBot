@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports.run = async (bot, message, args, banchoState) => {
+    const banchoRole = message.channel.server.roles.get('name', 'BanchoQuest')
     if(!args[2]) return message.reply("type help for commands")
     if(args[2] === "setlead" 
         && (banchoState[message.guild.id].leader === "")){
@@ -24,8 +25,28 @@ module.exports.run = async (bot, message, args, banchoState) => {
     } else {
         return message.reply("Only leader or server admin can reset leader")
     }
-    if(args[2] === "startQuest"){
-
+    if(args[2] === "newQuest"){
+        //TODO, require an image, create a new album for the images
+    }
+    if(args[2] === "requestNextPrompt"){
+        message.channel.send(banchoRole.mention() + "Accepting replies for next prompt"); 
+        banchoState[message.guild.id].banchoQuest.readyPrompt = true; 
+        //TODO initiate a automatic timeout component      
+    }
+    if(args[2] === "addPrompt"){
+        if(banchoState[message.guild.id].banchoQuest.readyPrompt === true){
+            //don't let people spam fill the prompts object
+            if(banchoState[message.guild.id].banchoQuest.prompts.length > 10){ 
+                let prompt = message.content.substring(10);
+                banchoState[message.guild.id].banchoQuest.prompts.push(prompt);
+            }
+            else{
+                return message.channel.send("too many prompts");
+            }
+        }
+        else{
+            return message.channel.send("not accepting prompts at this time");
+        }
     }
 }
 

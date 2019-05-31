@@ -70,7 +70,11 @@ bot.on("guildCreate", guild => {
     if(!(banchoState.hasOwnProperty(guild.id))){
         banchoState[guild.id] = {
             "banchoSoul": 10,
-            "qstLead": ""
+            "banchoQuest": {
+                "qstLead": "",
+                "ready": false,
+                "prompts": []                
+            }
         };
         fs.writeFile("./banchosoul.json", JSON.stringify(banchoState, null, 1), (err) => {
             if (err){
