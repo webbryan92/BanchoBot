@@ -15,7 +15,7 @@ module.exports.run = async (bot, message, args, banchoState) => {
             console.log("banchosoul.json has been updated(banchoquest setlead)")
         });
     } else {
-        return message.reply("There is already a leader, type help for help removing a user")
+        return message.channel.send("There is already a leader, type help for help removing a user")
     }
     //test user and mention object comparison
     if(args[2] === "removelead" 
@@ -23,7 +23,7 @@ module.exports.run = async (bot, message, args, banchoState) => {
             || message.member.hasPermission("ADMINISTRATOR"))){
         banchoState[message.guild.id].leader = "";
     } else {
-        return message.reply("Only leader or server admin can reset leader")
+        return message.channel.send("Only leader or server admin can reset leader")
     }
     if(args[2] === "newQuest"){
         //TODO, require an image, create a new album for the images
@@ -36,17 +36,30 @@ module.exports.run = async (bot, message, args, banchoState) => {
     if(args[2] === "addPrompt"){
         if(banchoState[message.guild.id].banchoQuest.readyPrompt === true){
             //don't let people spam fill the prompts object
-            if(banchoState[message.guild.id].banchoQuest.prompts.length > 10){ 
+            if(banchoState[message.guild.id].banchoQuest.prompts.length < 10){
                 let prompt = message.content.substring(10);
                 banchoState[message.guild.id].banchoQuest.prompts.push(prompt);
             }
             else{
+                banchoState[message.guild.id].banchoQuest.readyPrompt === false;
                 return message.channel.send("too many prompts");
             }
         }
         else{
             return message.channel.send("not accepting prompts at this time");
         }
+    }
+    if(args[2] === "selectPrompt"){
+        if(isLeader(message)){
+            let length = banchoState[message.guild.id].banchoQuest.prompts.length
+            let index = Math.floor(Math.random() * length-1)
+            winningPrompt = banchoState[message.guild.id].banchoQuests.prompt[index];
+            banchoState[message.guild.id].banchoQuest.readyPrompt === false;
+            return message.channel.send(winningPrompt)
+        }
+    }
+    if(args[2] === "uploadPrompt"){
+        //investigate imgur API to add items to its API
     }
 }
 
